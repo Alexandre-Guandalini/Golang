@@ -8,9 +8,12 @@ import (
 )
 
 type User struct {
+	ID string `json:"userID"`
 	Login string `json:"userName"`
 	Password string
 }
+
+var usersMap = make(map[string]User)
 
 func main() {
 	jsonFile, err := os.Open("users.json")
@@ -29,6 +32,7 @@ func main() {
 		fmt.Println("error:", err)
 	}
 	
+	
     // we initialize our Users array
     var users []User
 
@@ -37,6 +41,11 @@ func main() {
 	err = json.Unmarshal(byteValue, &users)
 	if err != nil {
 		fmt.Println("error:", err)
+	}
+	//fmt.Printf("%+v", users)
+	//boucle line 37 with ID
+	for _, user := range users {
+		usersMap[user.ID] = user
 	}
 	fmt.Printf("%+v", users)
 }
